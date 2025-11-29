@@ -1,4 +1,4 @@
-from src import masks
+from src import widget
 
 
 def main() -> None:
@@ -7,8 +7,7 @@ def main() -> None:
     Ничего не принимает, ничего не возвращает
     """
 
-    print(masks.get_mask_card_number("7000 7922 8960 6361"))
-    print(masks.get_mask_account("73654108430135874305"))
+    print(widget.mask_account_card('Visa Platinum 7000792289606361'))
 
 
 if __name__ == "__main__":
