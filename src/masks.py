@@ -8,7 +8,7 @@ def get_mask_card_number(card_number: str) -> str:
     XXXX XX** **** XXXX
     """
 
-    card_number = card_number.replace(" ", "")
+    card_number = str(card_number).replace(" ", "")
 
     for i in card_number:
         if not i.isdigit():
@@ -19,11 +19,9 @@ def get_mask_card_number(card_number: str) -> str:
     card_number_list = list(card_number)
     card_number_list = card_number_list[:6] + [MASK_SYMBOL] * 6 + card_number_list[-4:]
 
-    # итерация по списку с конца через каждые 4 элемента
-    for i in range(len(card_number_list) - 4, 0, -4):
-        card_number_list.insert(i, " ")
-
-    masked_card_number = "".join(card_number_list)
+    masked_card_number = " ".join(
+        ["".join(card_number_list[i - 4 : i]) for i in range(4, len(card_number_list) + 1, 4)]
+    )
 
     return masked_card_number
 
@@ -35,7 +33,7 @@ def get_mask_account(account_number: str) -> str:
     **XXXX
     Видны последние 4 цифры номера.
     """
-
+    account_number = str(account_number)
     for i in account_number:
         if not i.isdigit():
             raise ValueError("Invalid account number. Expected digit sequence")

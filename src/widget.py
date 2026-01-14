@@ -8,6 +8,7 @@ def mask_account_card(user_card: str) -> str:
     Принимает тип и номер карты/счёта в виде str.
     Возвращает Тип карты и замаскированную карту/счёт.
     """
+    user_card = str(user_card)
     user_card_number = "".join([i for i in user_card if i.isdigit()])
     user_card_number_length = len(user_card_number)
     if user_card_number_length == 20:
@@ -16,7 +17,7 @@ def mask_account_card(user_card: str) -> str:
         masked_user_card = masks.get_mask_card_number(user_card_number)
     else:
         raise ValueError("Invalid card/account number. Expected sequence of 16 or 20 digits.")
-    user_card_type = user_card[: len(user_card) - user_card_number_length]
+    user_card_type = "".join([i for i in user_card if not i.isdigit()]).strip() + " "
     masked_user_card = user_card_type + masked_user_card
     return masked_user_card
 
