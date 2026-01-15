@@ -16,6 +16,11 @@ def filter_by_currency(dict_list: list[dict], currency: str):
 
 
 def transaction_description(dict_list: list[dict]):
+    """
+    Принимает list[dict].
+    Возвращает объект генератора,
+    выдающий описание транзакции
+    """
     if isinstance(dict_list, list):
         for i in dict_list:
             try:
@@ -27,6 +32,11 @@ def transaction_description(dict_list: list[dict]):
 
 
 def card_number_generator(start: int, end: int):
+    """
+    Принимает start и end - начало и конец [x;y]
+    Возвращает генератор карт формата
+    XXXX XXXX XXXX XXXX
+    """
     if start < 1:
         start = 1
     card_generator = ("0" * (16 - len(str(i))) + str(i) for i in range(start, end + 1))
