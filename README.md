@@ -61,6 +61,31 @@ sorted_by_date = processing.sort_by_date(list[dict], reverse=True)
 # По умолчанию по убыванию (reverse = True)
 ```
 
+- filter_by_currency
+```
+    """
+    Принимает list[dict] и currency - тип валюты.
+    Возвращает объект генератора,
+    выдающий по одному элементу с совпадающей валютой
+    """
+```
+- transaction_description
+```
+    """ 
+    Принимает list[dict].
+    Возвращает объект генератора,
+    выдающий описание транзакции
+    """
+```
+- card_number_generator
+```
+    """
+    Принимает start и end - начало и конец [x;y]
+    Возвращает генератор карт формата
+    XXXX XXXX XXXX XXXX
+    """
+```
+
 ## Тестирование 
 ### Отчёт о тестировании последней версии кода сформирован в htmlcov
 
