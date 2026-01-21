@@ -86,6 +86,20 @@ sorted_by_date = processing.sort_by_date(list[dict], reverse=True)
     """
 ```
 
+- decorators.log(file_name)
+```
+@decorators.log(file_name='<file_name (optional)>')
+def func(*args, **kwargs):
+    ...
+```
+Ведёт логи использования функции в формате:
+
+    Имя функции,
+    Результат выполнения,
+    Возбуждаемое исключение,
+    args,
+    kwargs
+Если аргумент не задан, выводит в  stdout по умолчанию.
 ## Тестирование 
 ### Отчёт о тестировании последней версии кода сформирован в htmlcov
 

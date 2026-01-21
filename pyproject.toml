@@ -31,7 +31,7 @@ dev = [
 [tool.mypy]
 disallow_untyped_defs = true
 warn_return_any = true
-exclude = ['venv', '.venv']
+exclude = ['venv', '.venv', 'src/decorators', 'src/generators']
 
 [tool.black]
 line-length = 119
