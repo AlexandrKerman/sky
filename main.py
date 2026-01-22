@@ -20,7 +20,7 @@ def main() -> None:
             ]
         )
     )
-    operation = utils.get_operations('data/operations.json')
+    operation = utils.get_operations("data/operations.json")
     print(operation)
 
 
