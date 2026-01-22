@@ -17,8 +17,11 @@ def get_operations(path: str) -> list[dict]:
     Если не список -> []
     """
     with open(path, 'r', encoding='utf-8') as json_file:
-        if isinstance(operations := json.load(json_file), list):
-            return operations
+        try:
+            if isinstance(operations := json.load(json_file), list):
+                return operations
+        except json.JSONDecodeError:
+            return []
     return []
 
 
