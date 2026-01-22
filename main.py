@@ -1,4 +1,4 @@
-from src import masks, processing, widget
+from src import masks, processing, utils, widget
 
 
 def main() -> None:
@@ -20,6 +20,8 @@ def main() -> None:
             ]
         )
     )
+    operation = utils.get_operations('data/operations.json')[1]
+    print(utils.convert_currency_to_rub(operation))
 
 
 if __name__ == "__main__":
