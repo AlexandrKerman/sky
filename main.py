@@ -20,8 +20,9 @@ def main() -> None:
             ]
         )
     )
-    operation = utils.get_operations("data/operations.json")
+    operation = utils.get_operations("data/operations.json")[1]
     print(operation)
+    print(utils.convert_currency_to_rub(operation))
 
 
 if __name__ == "__main__":
