@@ -3,7 +3,9 @@ import logging
 import os
 
 import requests
+import pandas as pd
 from dotenv import load_dotenv
+from pandas.core.methods.to_dict import to_dict
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
@@ -24,7 +26,7 @@ log_handler.setFormatter(formatter)
 logger.addHandler(log_handler)
 
 
-def get_operations(path: str) -> list[dict]:
+def get_operations_from_json(path: str) -> list[dict]:
     """
     Получает список словарей из JSON по пути path.
     Возвращает полученный список словарей.
@@ -32,6 +34,9 @@ def get_operations(path: str) -> list[dict]:
     """
     logger.info(f"Got {path}: {type(path)}")
     logger.info(f"Trying to open file {path}")
+    if not path.endswith('.json'):
+        logger.warning(f'Got not .json: {path}. Returning empty list...')
+        return []
     with open(path, "r", encoding="utf-8") as json_file:
         logger.info("File opened")
         try:
@@ -43,6 +48,36 @@ def get_operations(path: str) -> list[dict]:
             return []
     logger.warning("Something goes wrong. Returning empty list...")
     return []
+
+
+def get_operations_from_csv(path: str, delimiter: str = ';') -> list[dict]:
+    """
+    :param path: str - .csv file
+    :return: list[dict] of operations in path
+    """
+    logger.info(f'Got {path}: {type(path)}')
+    if not path.endswith('.csv'):
+        logger.warning(f'Got not .csv: {path}. Returning empty list...')
+        return []
+    logger.info('Start reading...')
+    df = pd.read_csv(path, delimiter=delimiter)
+    logger.info('Reading complete. Returning list of dicts...')
+    return df.to_dict('records')
+
+
+def get_operations_from_excel(path: str) -> list[dict]:
+    """
+    :param path: str - .xlsx or .xls file
+    :return: list[dict] of operations in path
+    """
+    logger.info(f'Got {path}: {type(path)}')
+    if not path.endswith(('.xlsx', 'xls')):
+        logger.warning('Got not excel file (.xslx, .xls). Returning empty list...')
+        return []
+    logger.info('Start reading...')
+    df = pd.read_excel(path)
+    logger.info('Reading complete. Returning list of dicts...')
+    return df.to_dict('records')
 
 
 def convert_currency_to_rub(transaction: dict) -> int:

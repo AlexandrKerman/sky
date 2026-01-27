@@ -20,9 +20,10 @@ def main() -> None:
             ]
         )
     )
-    operation = utils.get_operations("data/operations.json")[1]
-    print(operation)
-    print(utils.convert_currency_to_rub(operation))
+    # operation = utils.get_operations_from_json("data/operations.json")[1]
+    # print(operation)
+    print('_'*30)
+    print(utils.get_operations_from_excel('data/transactions_excel.xlsx'))
 
 
 if __name__ == "__main__":
