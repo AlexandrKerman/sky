@@ -1,3 +1,6 @@
+import re
+
+
 def filter_by_state(dict_list: list[dict], state: str = "EXECUTED") -> list[dict]:
     """
     Принимает на вход список словарей и опциональный ключ (По умолчанию 'EXECUTED').
@@ -14,3 +17,11 @@ def sort_by_date(dict_list: list[dict], reverse: bool = True) -> list[dict]:
     """
     new_dict_list = sorted(dict_list, key=lambda x: x.get("date", ""), reverse=reverse)
     return new_dict_list
+
+
+def process_bank_search(data: list[dict]) -> list[dict]:
+    pass
+
+
+def process_bank_operations(data: list[dict]) -> list[dict]:
+    pass
