@@ -9,11 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-#
-# logging.basicConfig(level=logging.DEBUG,
-#                     format='%(asctime)s | %(name)s | %(levelname)s | %(message)s',
-#                     filename='logs/utils.log',
-#                     filemode='w')
+
 logger = logging.getLogger("utils_logger")
 logger.setLevel(logging.DEBUG)
 
@@ -51,7 +47,7 @@ def get_operations_from_json(path: str, no_none: bool = False) -> list[dict]:
     return []
 
 
-def get_operations_from_csv(path: str, delimiter: str = ";") -> list[dict]:
+def get_operations_from_csv(path: str, delimiter: str = ";", no_none: bool = False) -> list[dict]:
     """
     :param path: str - .csv file
     :return: list[dict] of operations in path
@@ -62,13 +58,16 @@ def get_operations_from_csv(path: str, delimiter: str = ";") -> list[dict]:
         return []
     logger.info("Start reading...")
     df = pd.read_csv(path, delimiter=delimiter)
+    if no_none:
+        df = df.dropna(how='all')
     logger.info("Reading complete. Returning list of dicts...")
     return df.to_dict("records")
 
 
-def get_operations_from_excel(path: str) -> list[dict]:
+def get_operations_from_excel(path: str, no_none: bool = False) -> list[dict]:
     """
-    :param path: str - .xlsx or .xls file
+    :param path: str - .xlsx or .xls file,
+    :param no_none: bool = False - exclude none, if True
     :return: list[dict] of operations in path
     """
     logger.info(f"Got {path}: {type(path)}")
@@ -78,6 +77,8 @@ def get_operations_from_excel(path: str) -> list[dict]:
     logger.info("Start reading...")
     df = pd.read_excel(path)
     logger.info("Reading complete. Returning list of dicts...")
+    if no_none:
+        df = df.dropna(how='all')
     return df.to_dict("records")
 
 
