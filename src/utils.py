@@ -59,7 +59,7 @@ def get_operations_from_csv(path: str, delimiter: str = ";", no_none: bool = Fal
     logger.info("Start reading...")
     df = pd.read_csv(path, delimiter=delimiter)
     if no_none:
-        df = df.dropna(how='all')
+        df = df.dropna(how="all")
     logger.info("Reading complete. Returning list of dicts...")
     return df.to_dict("records")
 
@@ -78,7 +78,7 @@ def get_operations_from_excel(path: str, no_none: bool = False) -> list[dict]:
     df = pd.read_excel(path)
     logger.info("Reading complete. Returning list of dicts...")
     if no_none:
-        df = df.dropna(how='all')
+        df = df.dropna(how="all")
     return df.to_dict("records")
 
 

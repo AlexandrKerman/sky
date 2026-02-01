@@ -1,6 +1,7 @@
 import re
 from collections import Counter
 
+
 def filter_by_state(dict_list: list[dict], state: str = "EXECUTED") -> list[dict]:
     """
     Принимает на вход список словарей и опциональный ключ (По умолчанию 'EXECUTED').
@@ -22,7 +23,7 @@ def process_bank_search(data: list[dict], search: str) -> list[dict]:
     Принимает list[dict] с ключами 'description' и слово для поиска search (str).
     Возвращает list[dict], где было найдено search по ключу 'description'.
     """
-    return [i for i in data if re.search(search, str(i.get('description')), flags=re.IGNORECASE)]
+    return [i for i in data if re.search(search, str(i.get("description")), flags=re.IGNORECASE)]
 
 
 def process_bank_operations(data: list[dict], categories: list) -> dict:
@@ -30,4 +31,4 @@ def process_bank_operations(data: list[dict], categories: list) -> dict:
     Принимает data: list[dict] и categories: list
     Возвращает dict в виде {'category': count}
     """
-    return Counter([description for i in data if (description := i.get('description')) in categories])
+    return dict(Counter([description for i in data if (description := i.get("description")) in categories]))
