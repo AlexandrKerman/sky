@@ -25,7 +25,7 @@ log_handler.setFormatter(formatter)
 logger.addHandler(log_handler)
 
 
-def get_operations_from_json(path: str) -> list[dict]:
+def get_operations_from_json(path: str, no_none: bool = False) -> list[dict]:
     """
     Получает список словарей из JSON по пути path.
     Возвращает полученный список словарей.
@@ -41,6 +41,8 @@ def get_operations_from_json(path: str) -> list[dict]:
         try:
             if isinstance(operations := json.load(json_file), list):
                 logger.info("Got valid JSON. Returning...")
+                if no_none:
+                    operations = [i for i in operations if i]
                 return operations
         except json.JSONDecodeError:
             logger.error("Not valid JSON. Returning empty list...")
