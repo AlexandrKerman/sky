@@ -100,6 +100,29 @@ def func(*args, **kwargs):
     args,
     kwargs
 Если аргумент не задан, выводит в  stdout по умолчанию.
+
+- process_bank_search(data, search)
+```
+Ищет строку search в data.description
+Возвращает список словарей, где было найдено
+```
+
+- process_bank_operations(data, categories)
+```
+Считает количество вхождений элементов из categories
+в data.description в виде словаря формата: {'<category_1>': <count_of_category_1>, '<category_2>': <count_of_category_2>
+```
+
+
+- get_from_json(path, no_none=False), get_from_csv(path, no_none=False), get_from_excel(path, no_none=False)
+```
+    Читают данные из файла path.
+    no_none - удалить ли данные, где значение любого столбца - None/nan
+    Возвращают список словарей, которые были записаны в файле.
+```
+
+
+
 ## Тестирование 
 ### Отчёт о тестировании последней версии кода сформирован в htmlcov
 
@@ -113,5 +136,5 @@ pytest --cov
 ```
 - Экспорт информации о покрытии в формат html
 ```
-pytest --cov=src --covreport=html
+pytest --cov=src --cov-report=html
 ```
