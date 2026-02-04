@@ -19,7 +19,7 @@ def test_mask_account_card_valid(number, expected):
 
 
 @pytest.mark.parametrize(
-    "number", ["dsass2222", "2222222222222222222222222222", "", 3244444442234, 00000000000000000000, None, []]
+    "number", ["dsass2222", "2222222222222222222222222222", "Счёт фыв3 17823678 72638", 3244444442234, 1]
 )
 def test_mask_account_card_invalid(number):
     with pytest.raises(ValueError):

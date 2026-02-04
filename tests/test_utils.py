@@ -42,8 +42,8 @@ def test_get_csv():
     with patch("pandas.read_csv") as mock_csv:
         mock_csv.return_value = pd.DataFrame({"id": [0000, 1111], "amount": [100, 200]})
         assert utils.get_operations_from_csv("data/test.csv") == [
-            {"id": 0000, "amount": 100},
-            {"id": 1111, "amount": 200},
+             {"id": 0000, 'state': None, 'date': None, 'operationAmount': {'amount': 100, 'currency': {'name': None, 'code': None}}, 'description': None, 'from': None, 'to': None},
+             {"id": 1111, 'state': None, 'date': None, 'operationAmount': {'amount': 200, 'currency': {'name': None, 'code': None}}, 'description': None, 'from': None, 'to': None},
         ]
 
 
@@ -57,8 +57,8 @@ def test_get_excel():
     with patch("pandas.read_excel") as mock_excel:
         mock_excel.return_value = pd.DataFrame({"id": [0000, 1111], "amount": [100, 200]})
         assert utils.get_operations_from_excel("data/test.xlsx") == [
-            {"id": 0000, "amount": 100},
-            {"id": 1111, "amount": 200},
+            {"id": 0000, 'state': None, 'date': None, 'operationAmount': {'amount': 100, 'currency': {'name': None, 'code': None}}, 'description': None, 'from': None, 'to': None},
+            {"id": 1111, 'state': None, 'date': None, 'operationAmount': {'amount': 200, 'currency': {'name': None, 'code': None}}, 'description': None, 'from': None, 'to': None},
         ]
 
 
@@ -66,8 +66,8 @@ def test_get_excel_xls():
     with patch("pandas.read_excel") as mock_excel:
         mock_excel.return_value = pd.DataFrame({"id": [0000, 1111], "amount": [100, 200]})
         assert utils.get_operations_from_excel("data/test.xls") == [
-            {"id": 0000, "amount": 100},
-            {"id": 1111, "amount": 200},
+            {"id": 0000, 'state': None, 'date': None, 'operationAmount': {'amount': 100, 'currency': {'name': None, 'code': None}}, 'description': None, 'from': None, 'to': None},
+            {"id": 1111, 'state': None, 'date': None, 'operationAmount': {'amount': 200, 'currency': {'name': None, 'code': None}}, 'description': None, 'from': None, 'to': None},
         ]
 
 
