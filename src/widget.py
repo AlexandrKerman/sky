@@ -3,11 +3,13 @@ import datetime
 from src import masks
 
 
-def mask_account_card(user_card: str) -> str:
+def mask_account_card(user_card: str) -> str | None:
     """
     Принимает тип и номер карты/счёта в виде str.
     Возвращает Тип карты и замаскированную карту/счёт.
     """
+    if not user_card:
+        return None
     user_card = str(user_card)
     user_card_number = "".join([i for i in user_card if i.isdigit()])
     user_card_number_length = len(user_card_number)
@@ -27,6 +29,8 @@ def get_date(date: str) -> str:
     Принимает на вход неотформатированную дату в формате
     yyyy-dd-mmThh:mm:ss.ssssss
     """
+    if date.endswith("Z"):
+        date = date[:-1] + ".00"
     parsed_date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%f")
     formatted_date = parsed_date.strftime("%d.%m.%Y")
     return formatted_date

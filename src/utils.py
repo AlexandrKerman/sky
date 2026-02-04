@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-
 logger = logging.getLogger("utils_logger")
 logger.setLevel(logging.DEBUG)
 
@@ -59,9 +58,23 @@ def get_operations_from_csv(path: str, delimiter: str = ";", no_none: bool = Fal
     logger.info("Start reading...")
     df = pd.read_csv(path, delimiter=delimiter)
     if no_none:
-        df = df.dropna(how="all")
+        df = df.dropna()
     logger.info("Reading complete. Returning list of dicts...")
-    return df.to_dict("records")
+    return [
+        {
+            "id": i.get("id"),  # Преобразование плоского словаря во вложенный со структурой JSON
+            "state": i.get("state"),
+            "date": i.get("date"),
+            "operationAmount": {
+                "amount": i.get("amount"),
+                "currency": {"name": i.get("currency_name"), "code": i.get("currency_code")},
+            },
+            "description": i.get("description"),
+            "from": i.get("from"),
+            "to": i.get("to"),
+        }
+        for i in df.to_dict("records")
+    ]
 
 
 def get_operations_from_excel(path: str, no_none: bool = False) -> list[dict]:
@@ -78,8 +91,22 @@ def get_operations_from_excel(path: str, no_none: bool = False) -> list[dict]:
     df = pd.read_excel(path)
     logger.info("Reading complete. Returning list of dicts...")
     if no_none:
-        df = df.dropna(how="all")
-    return df.to_dict("records")
+        df = df.dropna()
+    return [
+        {
+            "id": i.get("id"),  # Преобразование плоского словаря во вложенный со структурой JSON
+            "state": i.get("state"),
+            "date": i.get("date"),
+            "operationAmount": {
+                "amount": i.get("amount"),
+                "currency": {"name": i.get("currency_name"), "code": i.get("currency_code")},
+            },
+            "description": i.get("description"),
+            "from": i.get("from"),
+            "to": i.get("to"),
+        }
+        for i in df.to_dict("records")
+    ]
 
 
 def convert_currency_to_rub(transaction: dict) -> int:
