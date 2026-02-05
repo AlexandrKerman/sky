@@ -58,7 +58,7 @@ def get_operations_from_csv(path: str, delimiter: str = ";", no_none: bool = Fal
     logger.info("Start reading...")
     df = pd.read_csv(path, delimiter=delimiter)
     if no_none:
-        df = df.dropna()
+        df = df.dropna(how="all")
     logger.info("Reading complete. Returning list of dicts...")
     return [
         {
@@ -73,7 +73,7 @@ def get_operations_from_csv(path: str, delimiter: str = ";", no_none: bool = Fal
             "from": i.get("from"),
             "to": i.get("to"),
         }
-        for i in df.to_dict("records")
+        for i in [{k: v if pd.notna(v) else None for k, v in dict_.items()} for dict_ in df.to_dict("records")]
     ]
 
 
@@ -91,7 +91,7 @@ def get_operations_from_excel(path: str, no_none: bool = False) -> list[dict]:
     df = pd.read_excel(path)
     logger.info("Reading complete. Returning list of dicts...")
     if no_none:
-        df = df.dropna()
+        df = df.dropna(how="all")
     return [
         {
             "id": i.get("id"),  # Преобразование плоского словаря во вложенный со структурой JSON
@@ -105,7 +105,7 @@ def get_operations_from_excel(path: str, no_none: bool = False) -> list[dict]:
             "from": i.get("from"),
             "to": i.get("to"),
         }
-        for i in df.to_dict("records")
+        for i in [{k: v if pd.notna(v) else None for k, v in dict_.items()} for dict_ in df.to_dict("records")]
     ]
 
 

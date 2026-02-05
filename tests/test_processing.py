@@ -30,13 +30,23 @@ def test_sort_by_date_invalid():
 
 
 def test_bank_search():
-    data = [{'description': 'some_Description'}, {'description': 'some_another_description'}, {'description': 'no'}, {}]
-    result = processing.process_bank_search(data, search='description')
-    assert result == [{'description': 'some_Description'}, {'description': 'some_another_description'}]
+    data = [
+        {"description": "some_Description"},
+        {"description": "some_another_description"},
+        {"description": "no"},
+        {},
+    ]
+    result = processing.process_bank_search(data, search="description")
+    assert result == [{"description": "some_Description"}, {"description": "some_another_description"}]
 
 
 def rest_bank_operations():
-    data = [{'description': 'some_Description'}, {'description': 'some_another_description'}, {'description': 'no'}, {'description': 'no'}, {}]
-    result = processing.process_bank_operations(data, categories=['some_Description', 'no'])
-    assert result == {'some_Description': 1, 'no': 2}
-
+    data = [
+        {"description": "some_Description"},
+        {"description": "some_another_description"},
+        {"description": "no"},
+        {"description": "no"},
+        {},
+    ]
+    result = processing.process_bank_operations(data, categories=["some_Description", "no"])
+    assert result == {"some_Description": 1, "no": 2}
