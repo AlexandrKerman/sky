@@ -2,10 +2,7 @@ import logging
 
 MASK_SYMBOL = "*"
 
-# logging.basicConfig(level=logging.ERROR,
-#                     format='%(asctime)s | %(name)s | %(levelname)s | %(message)s',
-#                     filename='logs/masks.log',
-#                     filemode='w')
+
 logger = logging.getLogger("masks_logger")
 logger.setLevel(logging.DEBUG)
 
