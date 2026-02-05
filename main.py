@@ -3,10 +3,19 @@ from src import generators, processing, utils, widget
 
 def get_operation_type(skip_hello: bool = False) -> tuple:
     operations_from_file = {
-        "1": (utils.get_operations_from_json("data/operations.json", no_none=True), "Для обработки выбран JSON-файл"),
-        "2": (utils.get_operations_from_csv("data/transactions.csv", no_none=True), "Для обработки выбран CSV-файл"),
+        "1": (
+            utils.get_operations_from_json,
+            {"path": "data/operations.json", "no_none": True},
+            "Для обработки выбран JSON-файл",
+        ),
+        "2": (
+            utils.get_operations_from_csv,
+            {"path": "data/transactions.csv", "no_none": True},
+            "Для обработки выбран CSV-файл",
+        ),
         "3": (
-            utils.get_operations_from_excel("data/transactions_excel.xlsx", no_none=True),
+            utils.get_operations_from_excel,
+            {"path": "data/transactions_excel.xlsx", "no_none": True},
             "Для обработки выбран XLSX-файл",
         ),
     }
@@ -45,8 +54,8 @@ def get_filter():
 
 def main() -> None:
     read_operation = get_operation_type()
-    print(read_operation[1])
-    operations_data = read_operation[0]
+    print(read_operation[2])
+    operations_data = read_operation[0](**read_operation[1])
     selected_filter = get_filter()
     filtered_data = processing.filter_by_state(operations_data, selected_filter)
     print(f'Операции отфильтрованы по статусу "{selected_filter}"')
@@ -80,6 +89,7 @@ def main() -> None:
         user_input = input("Ваш ответ: ").strip()
         filtered_data = processing.process_bank_search(filtered_data, user_input)
         print(f'Список транзакций отфильтрован по наличию слова "{user_input}".')
+
     data_len = len(filtered_data)
     print(
         "\nРаспечатываю итоговый список транзакций...\n" f"Всего банковских операций в выборке: {len(filtered_data)}"
@@ -88,7 +98,7 @@ def main() -> None:
         print(
             *[
                 f"{widget.get_date(i.get('date'))} {i.get('description')}\n"
-                f"{widget.mask_account_card(i.get('from'))} -> {widget.mask_account_card(i.get('to'))}\n"
+                f"{f'{widget.mask_account_card(i.get('from'))} -> ' if widget.mask_account_card(i.get('from')) else ''}{widget.mask_account_card(i.get('to'))}\n"
                 f"{i['operationAmount']['amount']} {i['operationAmount']['currency']['name']}"
                 for i in filtered_data
             ],
